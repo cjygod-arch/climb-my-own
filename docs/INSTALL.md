@@ -22,28 +22,23 @@
 
 ---
 
-## 방법 A. GitHub Pages에 올린다 (권장)
+## 배포는 이미 되어 있다
 
-실제 사용 환경과 같고, 한 번 올리면 계속 쓸 수 있다.
+**https://cjygod-arch.github.io/climb-my-own/**
+
+폰 브라우저에서 이 주소를 열면 된다. HTTPS라 위치·설치·오프라인이 모두 동작한다.
+
+코드를 고친 뒤에는 push만 하면 CI가 검사하고 자동 배포한다.
 
 ```bash
-cd c:\Users\dev3\Documents\climb
-git init
-git add .
-git commit -m "Climb My Own"
-git branch -M main
-git remote add origin https://github.com/<사용자>/<저장소>.git
-git push -u origin main
+git add -A
+git commit -m "설명"
+git push
 ```
 
-**Settings → Pages → Source** 를 **GitHub Actions** 로 바꾸면
-`.github/workflows/deploy.yml` 이 검사 후 자동 배포한다.
+배포 상황은 저장소의 **Actions** 탭에서 볼 수 있다.
 
-주소는 `https://<사용자>.github.io/<저장소>/` — HTTPS라 전부 동작한다.
-
-자세한 절차는 [DEPLOY.md](DEPLOY.md).
-
-## 방법 B. 터널로 지금 바로 (코드 고치면서 확인할 때)
+## 배포 없이 즉시 확인하고 싶다면 (선택)
 
 내 PC의 개발 서버를 임시 HTTPS 주소로 열어준다. 배포 없이 즉시 확인할 수 있다.
 

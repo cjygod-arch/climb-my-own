@@ -4,6 +4,10 @@
 
 빌드 도구 없는 순수 HTML / CSS / ES6 모듈. 정적 호스팅(GitHub Pages)에 그대로 올라간다.
 
+**배포 주소: https://cjygod-arch.github.io/climb-my-own/**
+
+폰에서 이 주소를 열고 홈 화면에 추가하면 앱처럼 쓸 수 있다 → [docs/INSTALL.md](docs/INSTALL.md)
+
 ## 실행
 
 ES6 모듈은 `file://` 프로토콜에서 CORS로 차단된다. 반드시 정적 서버를 경유할 것.
