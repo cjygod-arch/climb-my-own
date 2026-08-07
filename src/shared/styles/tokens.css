@@ -1,0 +1,124 @@
+/*
+  tokens.css — 디자인 토큰의 단일 원천.
+  색·간격·굵기 값을 다른 파일에 직접 쓰지 않는다. 항상 여기의 변수를 참조한다.
+  근거: docs/DESIGN-SYSTEM.md
+
+  방향 전환(토스·당근 계열): 각진 계측기 → 부드럽고 단순한 카드 UI.
+  다만 무채색 기반 + 블루 액센트 1색, 산세리프 1종, 숫자 크게/라벨 작게는 그대로 유지한다.
+*/
+
+:root {
+  /* ── 컬러 · 라이트 ─────────────────────────────── */
+  /* 페이지는 옅은 회색, 카드는 흰색. 이 대비가 면을 나누므로 테두리가 거의 필요 없다. */
+  --c-bg: #F2F4F6;
+  --c-card: #FFFFFF;
+  --c-surface: #F2F4F6;
+  --c-surface-2: #E5E8EB;
+  --c-line: #EAEDF0;
+  --c-line-strong: #D1D6DB;
+
+  --c-text: #191F28;
+  --c-text-mute: #6B7684;
+  --c-text-faint: #8B95A1;
+  --c-text-invert: #FFFFFF;
+
+  /* 액센트는 단 1색. 사용처는 DESIGN-SYSTEM.md §2 허용 목록에 한한다. */
+  --c-accent: #3182F6;
+  --c-accent-press: #2272EB;
+  --c-accent-weak: #E8F3FF;
+
+  --c-danger: #F04452;
+  --c-danger-weak: #FFF0F0;
+
+  --c-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --c-shadow-up: 0 -1px 12px rgba(0, 0, 0, 0.05);
+
+  /* ── 형태 ─────────────────────────────────────── */
+  /* 라운드가 이 디자인의 기본 언어다. 각진 모서리를 쓰지 않는다. */
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+  --hairline: 1px;
+
+  /* ── 간격 ─────────────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 48px;
+
+  /* ── 타이포 ───────────────────────────────────── */
+  --font-sans:
+    'Pretendard Variable', Pretendard,
+    -apple-system, BlinkMacSystemFont,
+    'Apple SD Gothic Neo', 'Malgun Gothic',
+    system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  /* 굵기 3단계. 중간값을 쓰지 않는다. */
+  --fw-regular: 400;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --fs-display: 24px;
+  --fs-stat: 36px;
+  --fs-stat-sm: 22px;
+  --fs-title: 17px;
+  --fs-body: 15px;
+  --fs-caption: 13px;
+  --fs-label: 12px;
+
+  --lh-tight: 1.25;
+  --lh-snug: 1.4;
+  --lh-normal: 1.6;
+
+  /* ── 레이아웃 ─────────────────────────────────── */
+  --page-max: 560px;
+  --page-pad: 20px;
+  --header-h: 56px;
+  --tabbar-h: 62px;
+  --row-min-h: 56px;
+  --touch-min: 48px;
+
+  /* ── 모션 ─────────────────────────────────────── */
+  --dur-sheet: 220ms;
+  --ease-out: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --z-sheet: 100;
+  --z-tabbar: 50;
+  --z-header: 40;
+
+  color-scheme: light dark;
+}
+
+/* ── 컬러 · 다크 ────────────────────────────────────
+   동일한 토큰 이름을 덮어쓴다. 컴포넌트는 테마를 알지 못한다. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg: #101215;
+    --c-card: #191C20;
+    --c-surface: #101215;
+    --c-surface-2: #23272C;
+    --c-line: #23272C;
+    --c-line-strong: #333840;
+
+    --c-text: #F2F4F6;
+    --c-text-mute: #9AA3AE;
+    --c-text-faint: #6B7684;
+    --c-text-invert: #101215;
+
+    --c-accent: #4A90F7;
+    --c-accent-press: #6BA5F9;
+    --c-accent-weak: #16243A;
+
+    --c-danger: #FF6B75;
+    --c-danger-weak: #2A1618;
+
+    --c-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.24);
+    --c-shadow-up: 0 -1px 12px rgba(0, 0, 0, 0.32);
+  }
+}

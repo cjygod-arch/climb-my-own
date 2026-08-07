@@ -1,0 +1,14 @@
+# Overpass 응답 캐시. 재생성 가능하고 용량이 크다.
+# 지우면 tools/snap-waypoints.mjs · fetch-tracks.mjs 가 다시 내려받는다.
+.cache/
+
+# 편집기 · OS · 도구 로컬 설정
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.claude/
+
+# 임시 산출물
+*.log
+shots*/

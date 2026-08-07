@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "note": "배지 마스터. 판정 로직은 src/domain/rules/badgeRules.js 가 담당하며 이 파일은 기준값만 정의한다.",
+  "items": [
+    {
+      "code": "FIRST_STEP",
+      "title": "첫 발자국",
+      "description": "첫 산행을 기록했습니다.",
+      "criteria": { "type": "DISTINCT_MOUNTAINS", "count": 1 },
+      "tier": 1
+    },
+    {
+      "code": "MOUNTAIN_05",
+      "title": "명산 5",
+      "description": "100대 명산 중 5곳을 올랐습니다.",
+      "criteria": { "type": "DISTINCT_MOUNTAINS", "count": 5 },
+      "tier": 1
+    },
+    {
+      "code": "MOUNTAIN_10",
+      "title": "명산 10",
+      "description": "100대 명산 중 10곳을 올랐습니다.",
+      "criteria": { "type": "DISTINCT_MOUNTAINS", "count": 10 },
+      "tier": 1
+    },
+    {
+      "code": "MOUNTAIN_30",
+      "title": "명산 30",
+      "description": "100대 명산 중 30곳을 올랐습니다.",
+      "criteria": { "type": "DISTINCT_MOUNTAINS", "count": 30 },
+      "tier": 2
+    },
+    {
+      "code": "MOUNTAIN_50",
+      "title": "명산 50",
+      "description": "100대 명산의 절반을 올랐습니다.",
+      "criteria": { "type": "DISTINCT_MOUNTAINS", "count": 50 },
+      "tier": 2
+    },
+    {
+      "code": "MOUNTAIN_100",
+      "title": "명산 100",
+      "description": "100대 명산을 모두 올랐습니다.",
+      "criteria": { "type": "DISTINCT_MOUNTAINS", "count": 100 },
+      "tier": 3
+    },
+    {
+      "code": "DISTANCE_100",
+      "title": "누적 100km",
+      "description": "산에서 걸은 거리가 100km에 도달했습니다.",
+      "criteria": { "type": "TOTAL_DISTANCE", "count": 100 },
+      "tier": 1
+    },
+    {
+      "code": "DISTANCE_500",
+      "title": "누적 500km",
+      "description": "산에서 걸은 거리가 500km에 도달했습니다.",
+      "criteria": { "type": "TOTAL_DISTANCE", "count": 500 },
+      "tier": 2
+    },
+    {
+      "code": "DISTANCE_1000",
+      "title": "누적 1,000km",
+      "description": "산에서 걸은 거리가 1,000km에 도달했습니다.",
+      "criteria": { "type": "TOTAL_DISTANCE", "count": 1000 },
+      "tier": 3
+    },
+    {
+      "code": "ASCENT_8848",
+      "title": "8,848",
+      "description": "누적 상승고도가 에베레스트 표고에 도달했습니다.",
+      "criteria": { "type": "TOTAL_ASCENT", "count": 8848 },
+      "tier": 2
+    },
+    {
+      "code": "ASCENT_30000",
+      "title": "누적 30,000m",
+      "description": "누적 상승고도가 30,000m에 도달했습니다.",
+      "criteria": { "type": "TOTAL_ASCENT", "count": 30000 },
+      "tier": 3
+    },
+    {
+      "code": "HIGH_1500_05",
+      "title": "고산 5",
+      "description": "표고 1,500m 이상인 산 5곳을 올랐습니다.",
+      "criteria": { "type": "HIGH_ALTITUDE", "count": 5, "elevationM": 1500 },
+      "tier": 2
+    },
+    {
+      "code": "REGION_GANGWON_10",
+      "title": "강원 10",
+      "description": "강원 권역의 명산 10곳을 올랐습니다.",
+      "criteria": { "type": "REGION_COUNT", "count": 10, "region": "강원" },
+      "tier": 2
+    },
+    {
+      "code": "REGION_JEJU",
+      "title": "한라 등정",
+      "description": "한라산 정상에 올랐습니다.",
+      "criteria": { "type": "SPECIFIC_MOUNTAIN", "count": 1, "mountainId": "hallasan" },
+      "tier": 2
+    },
+    {
+      "code": "STREAK_03",
+      "title": "3개월 연속",
+      "description": "3개월 연속으로 산행을 기록했습니다.",
+      "criteria": { "type": "MONTHLY_STREAK", "count": 3 },
+      "tier": 1
+    },
+    {
+      "code": "STREAK_06",
+      "title": "6개월 연속",
+      "description": "6개월 연속으로 산행을 기록했습니다.",
+      "criteria": { "type": "MONTHLY_STREAK", "count": 6 },
+      "tier": 2
+    },
+    {
+      "code": "STREAK_12",
+      "title": "12개월 연속",
+      "description": "1년 동안 매달 산에 올랐습니다.",
+      "criteria": { "type": "MONTHLY_STREAK", "count": 12 },
+      "tier": 3
+    },
+    {
+      "code": "SINGLE_20",
+      "title": "장거리 20km",
+      "description": "한 번의 산행에서 20km를 걸었습니다.",
+      "criteria": { "type": "SINGLE_DISTANCE", "count": 20 },
+      "tier": 2
+    }
+  ]
+}

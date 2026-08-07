@@ -1,0 +1,117 @@
+/* shell.css — 앱 골격 전용. 화면 내용 스타일은 여기 두지 않는다. */
+
+.shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--c-bg);
+}
+
+/* ── 상단 바 ────────────────────────────────────── */
+/* 테두리를 긋지 않는다. 배경색이 같아 헤더가 페이지에 녹아 있다가,
+   스크롤되면 그림자로만 분리된다. */
+.appbar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background: var(--c-bg);
+}
+
+.appbar__inner {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  min-height: var(--header-h);
+  padding: 0 var(--space-2);
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  align-items: center;
+}
+
+.appbar__title {
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.appbar__side { display: flex; align-items: center; }
+.appbar__side--end { justify-content: flex-end; }
+
+.appbar__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  color: var(--c-text);
+  background: none;
+  border: none;
+  transition: background-color 120ms ease;
+}
+
+.appbar__btn:hover { background: var(--c-surface-2); }
+.appbar__btn:active { background: var(--c-line-strong); }
+
+/* ── 콘텐츠 ─────────────────────────────────────── */
+.outlet { flex: 1 1 auto; min-width: 0; }
+
+.shell[data-chrome='shell'] .outlet {
+  padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
+}
+
+.shell[data-chrome='shell'] .sticky-action {
+  bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
+}
+
+/* ── 하단 탭 ────────────────────────────────────── */
+.tabbar-slot {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-tabbar);
+}
+
+.tabbar {
+  display: flex;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  background: var(--c-card);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  box-shadow: var(--c-shadow-up);
+}
+
+.tabbar__item {
+  flex: 1 1 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-height: var(--tabbar-h);
+  color: var(--c-text-faint);
+  transition: color 140ms ease;
+}
+
+.tabbar__label {
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.01em;
+}
+
+/* 활성 표시 — 픽토그램이 채워지고 색이 액센트로.
+   면 아이콘이라 채움만으로도 대비가 충분해서 별도 표시선을 두지 않는다. */
+.tabbar__item[aria-current='page'] { color: var(--c-accent); }
+.tabbar__item[aria-current='page'] .tabbar__label { font-weight: var(--fw-bold); }
+
+.tabbar__item svg { transition: transform 160ms var(--ease-out); }
+.tabbar__item[aria-current='page'] svg { transform: translateY(-1px) scale(1.06); }
+
+/* ── 부팅 실패 화면 ─────────────────────────────── */
+.boot-error {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-8) var(--page-pad);
+}

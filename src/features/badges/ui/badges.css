@@ -1,0 +1,102 @@
+/* badges.css — 배지 전용. */
+
+.btiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.btile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 138px;
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  text-align: left;
+  border: none;
+  background: var(--c-card);
+}
+
+.btile__body { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+
+.btile__title {
+  font-size: var(--fs-title);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.02em;
+  line-height: var(--lh-tight);
+}
+
+.btile__desc {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-snug);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── 획득: 액센트 면 채움 ───────────────────────── */
+.btile--earned {
+  background: var(--c-accent);
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(49, 130, 246, 0.24);
+}
+
+.btile--earned .btile__desc { opacity: 0.82; }
+
+.btile__date {
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}
+
+/* ── 미획득: 흰 카드 + 진행률 ───────────────────── */
+.btile--locked {
+  background: var(--c-card);
+  color: var(--c-text-faint);
+  box-shadow: var(--c-shadow);
+}
+
+.btile--locked .btile__title { color: var(--c-text-mute); }
+
+.btile__progress { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.btile__count {
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 티어: 채도가 아니라 강조 강도로 ────────────── */
+/* 3티어일수록 어렵다. 획득 시 더 진하게, 미획득 시 테두리로 존재감을 준다. */
+.btile--earned[data-tier='2'] { background: var(--c-accent-press); }
+.btile--earned[data-tier='3'] { background: var(--c-text); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); }
+
+.btile--locked[data-tier='2'] { box-shadow: var(--c-shadow), inset 0 0 0 1px var(--c-line-strong); }
+.btile--locked[data-tier='3'] { box-shadow: var(--c-shadow), inset 0 0 0 2px var(--c-line-strong); }
+
+/* ── 획득 알림 시트 안의 항목 ──────────────────── */
+.bearn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  background: var(--c-accent);
+  color: #FFFFFF;
+  border-radius: var(--radius-lg);
+}
+
+.bearn__title {
+  font-size: var(--fs-title);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.02em;
+}
+
+.bearn__desc { font-size: var(--fs-caption); opacity: 0.82; }
+
+.bearn[data-tier='2'] { background: var(--c-accent-press); }
+.bearn[data-tier='3'] { background: var(--c-text); }

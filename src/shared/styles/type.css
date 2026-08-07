@@ -1,0 +1,92 @@
+/*
+  type.css — 타이포 위계.
+  위계는 굵기와 크기로만 만든다. 색으로 위계를 만들지 않는다.
+  수치 : 라벨 크기비 3:1 유지 (36px : 12px)
+*/
+
+.t-display {
+  font-size: var(--fs-display);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.03em;
+}
+
+/* 주요 수치 — 화면당 1~3개까지만 */
+.t-stat {
+  font-size: var(--fs-stat);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+}
+
+.t-stat-sm {
+  font-size: var(--fs-stat-sm);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.t-title {
+  font-size: var(--fs-title);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.02em;
+}
+
+.t-body {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  letter-spacing: -0.01em;
+}
+
+.t-body-strong {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+}
+
+/* 라벨 — 작고 차분하게. 대문자성 자간을 쓰지 않는다(한글에서 어색하다) */
+.t-label {
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+  color: var(--c-text-mute);
+}
+
+.t-caption {
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+  color: var(--c-text-mute);
+}
+
+/* 수치 뒤에 붙는 단위 */
+.t-unit {
+  font-size: 0.45em;
+  font-weight: var(--fw-bold);
+  color: var(--c-text-faint);
+  margin-left: 0.15em;
+  letter-spacing: 0;
+}
+
+/* 색 보조 유틸 — 위계용이 아니라 의미 표시용 */
+.t-mute { color: var(--c-text-mute); }
+.t-faint { color: var(--c-text-faint); }
+.t-accent { color: var(--c-accent); }
+.t-danger { color: var(--c-danger); }
+
+/* 긴 소개글 본문 */
+.t-prose {
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  letter-spacing: -0.01em;
+  color: var(--c-text);
+}
+
+.t-prose > p + p { margin-top: var(--space-4); }

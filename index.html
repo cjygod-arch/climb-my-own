@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Climb My Own</title>
+  <meta name="description" content="한국 100대 명산 코스 안내와 나의 산행 기록 관리" />
+  <!-- 상태 표시줄 색. 설치 후 전체화면에서 앱 배경과 이어져 보이게 한다. -->
+  <meta name="theme-color" content="#F2F4F6" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#101215" media="(prefers-color-scheme: dark)" />
+
+  <!-- iOS 사파리는 manifest를 거의 읽지 않는다. 아래 세 줄이 그 역할을 대신한다. -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Climb" />
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="./icons/icon-192.png" sizes="192x192" type="image/png" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+
+  <!-- 스타일 로드 순서는 캐스케이드에 의존한다. 변경 금지. -->
+  <link rel="stylesheet" href="./src/shared/styles/reset.css" />
+  <link rel="stylesheet" href="./src/shared/styles/tokens.css" />
+  <link rel="stylesheet" href="./src/shared/styles/base.css" />
+  <link rel="stylesheet" href="./src/shared/styles/type.css" />
+  <link rel="stylesheet" href="./src/shared/styles/layout.css" />
+  <link rel="stylesheet" href="./src/shared/styles/components.css" />
+  <link rel="stylesheet" href="./src/app/shell/shell.css" />
+  <link rel="stylesheet" href="./src/features/mountains/ui/mountains.css" />
+  <link rel="stylesheet" href="./src/features/courses/ui/courses.css" />
+  <link rel="stylesheet" href="./src/features/records/ui/records.css" />
+  <link rel="stylesheet" href="./src/features/badges/ui/badges.css" />
+  <link rel="stylesheet" href="./src/features/tracking/ui/tracking.css" />
+  <link rel="stylesheet" href="./src/features/profile/ui/profile.css" />
+</head>
+<body>
+  <!-- 앱 셸이 마운트되는 유일한 지점. 이 파일에 스크립트 로직을 두지 않는다. -->
+  <div id="app" aria-busy="true"></div>
+
+  <noscript>
+    이 서비스는 JavaScript가 필요합니다.
+  </noscript>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

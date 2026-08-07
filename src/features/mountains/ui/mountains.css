@@ -1,0 +1,92 @@
+/* mountains.css — 명산 목록·상세 전용. 다른 기능에서 쓰지 않는다. */
+
+.mfilter__search {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 48px;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-regular);
+  border-radius: var(--radius-full);
+  padding-left: var(--space-4);
+  background: var(--c-card);
+}
+
+/* ── 목록 ───────────────────────────────────────── */
+/* 카드 하나 안에 행을 담고, 행 사이는 아주 옅은 선으로만 나눈다 */
+.mlist {
+  background: var(--c-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-1) var(--space-2);
+  box-shadow: var(--c-shadow);
+}
+
+.mcard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  min-height: 72px;
+  padding: var(--space-3);
+  border-radius: var(--radius);
+  text-align: left;
+  background: none;
+  border: none;
+  transition: background-color 120ms ease;
+}
+
+.mcard:hover { background: var(--c-surface); }
+.mcard:active { background: var(--c-surface-2); }
+
+.mcard__main { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+
+.mcard__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 난이도 — 옅은 회색 알약 */
+.mcard__diff {
+  flex: none;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--space-2);
+  background: var(--c-surface-2);
+  border-radius: var(--radius-sm);
+  color: var(--c-text-mute);
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+}
+
+.mcard__loc,
+.mcard__tags { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mcard__tags { color: var(--c-text-faint); }
+
+/* 표고 — 목록 전체가 하나의 수치 열로 읽히도록 우측 정렬 */
+.mcard__elev {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.mcard__unit { color: var(--c-text-faint); }
+
+/* ── 상세 ───────────────────────────────────────── */
+.crow__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  min-width: 0;
+}
+
+.crow__meta .t-caption {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 42vw;
+}

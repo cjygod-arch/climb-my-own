@@ -1,0 +1,221 @@
+/* tracking.css — 산행 안내 화면 전용. */
+
+.track__map {
+  width: 100%;
+  height: 44dvh;
+  min-height: 260px;
+  background: var(--c-surface-2);
+}
+
+.track__mapfail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--space-4);
+}
+
+.track__panel {
+  position: relative;
+  margin-top: -20px;
+  background: var(--c-bg);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.track__inner { padding-top: var(--space-5); }
+
+/* ── 상태 배너 ──────────────────────────────────── */
+.track__banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+}
+
+.track__banner-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: currentColor;
+}
+
+.track__banner--ok { background: var(--c-accent-weak); color: var(--c-accent); }
+.track__banner--info { background: var(--c-surface-2); color: var(--c-text-mute); }
+.track__banner--warn { background: var(--c-danger-weak); color: var(--c-danger); }
+
+/* 코스를 벗어났을 때만 시선을 끈다 */
+.track__banner--warn .track__banner-dot { animation: track-blink 1.4s ease-in-out infinite; }
+
+@keyframes track-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+/* ── 지점 안내 ──────────────────────────────────── */
+.track__wp {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+}
+
+.track__wp + .track__wp { border-top: var(--hairline) solid var(--c-line); padding-top: var(--space-3); }
+
+.track__wp-dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  margin-top: 6px;
+  border-radius: var(--radius-full);
+  background: var(--c-line-strong);
+}
+
+.track__wp--next .track__wp-dot { background: var(--c-accent); }
+
+.track__wp-body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.track__wp--passed .track__wp-body { opacity: 0.55; }
+
+.track__wp-dist {
+  flex: none;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--c-accent);
+}
+
+.track__actions { display: flex; flex-direction: column; gap: var(--space-2); }
+
+/* ── 지도 위 현재 위치 ──────────────────────────── */
+.routemap__live-wrap { background: none; border: 0; }
+
+.routemap__live {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  background: var(--c-accent);
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.28);
+}
+
+/* ── 진행 중 알림 바 (앱 셸 하단) ───────────────── */
+.trackbar-slot {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--z-tabbar);
+  padding: 0 var(--space-3) var(--space-2);
+  pointer-events: none;
+}
+
+.trackbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: calc(var(--page-max) - var(--space-6));
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-4);
+  background: var(--c-accent);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 16px rgba(49, 130, 246, 0.32);
+  text-align: left;
+  pointer-events: auto;
+  transition: transform 120ms ease;
+}
+
+.trackbar:active { transform: scale(0.99); }
+
+.trackbar__pulse {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: #FFFFFF;
+  animation: track-blink 1.6s ease-in-out infinite;
+}
+
+.trackbar__body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+
+.trackbar__name {
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-bold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trackbar__meta { font-size: 11px; opacity: 0.86; font-variant-numeric: tabular-nums; }
+
+.trackbar__go { flex: none; display: flex; opacity: 0.9; }
+
+/* 안내 화면 자체에서는 알림 바를 감춘다 */
+.shell[data-tracking-open='true'] .trackbar-slot { display: none; }
+
+/* ── 걷기 시작 화면 ─────────────────────────────── */
+.walkstart {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.walkstart__icon {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: var(--c-accent-weak);
+  color: var(--c-accent);
+}
+
+.walkstart__notes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.walkstart__notes li {
+  position: relative;
+  padding-left: var(--space-4);
+  font-size: var(--fs-caption);
+  color: var(--c-text-mute);
+  line-height: var(--lh-snug);
+}
+
+.walkstart__notes li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-full);
+  background: var(--c-line-strong);
+}
+
+/* ── 기록 상세의 경로 지도 ──────────────────────── */
+.rec-map {
+  width: 100%;
+  height: 220px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--c-surface-2);
+}
+
+.rec-map__fail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}

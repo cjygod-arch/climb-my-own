@@ -1,0 +1,133 @@
+/*
+  layout.css — 페이지 골격과 배치 유틸.
+
+  면을 나누는 방법이 바뀌었다: 1px 헤어라인 → 옅은 회색 페이지 위의 흰 카드.
+  테두리를 긋지 않고 카드와 여백으로 나눈다.
+*/
+
+.page {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-4) var(--page-pad) var(--space-8);
+}
+
+.page__head { margin-bottom: var(--space-5); }
+.page__title { display: block; }
+.page__sub { margin-top: var(--space-2); color: var(--c-text-mute); font-size: var(--fs-caption); }
+
+/* 섹션 — 기본 간격이 곧 밀도 규칙이다 */
+.section + .section { margin-top: var(--space-6); }
+
+.section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.section__body { margin-top: var(--space-3); }
+
+/* ── 카드 ───────────────────────────────────────── */
+/* 이 앱에서 정보를 담는 기본 그릇. 테두리 대신 흰 면과 옅은 그림자. */
+.card {
+  background: var(--c-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--c-shadow);
+}
+
+.card--flat { box-shadow: none; }
+.card--tight { padding: var(--space-4); }
+.card--list { padding: var(--space-2) var(--space-3); }
+
+/* 누를 수 있는 카드 */
+.card--action {
+  width: 100%;
+  text-align: left;
+  border: none;
+  transition: transform 120ms ease, background-color 120ms ease;
+}
+
+.card--action:active { transform: scale(0.99); }
+
+/* 예전 이름 호환 — 점차 .card 로 옮긴다 */
+.surface { background: var(--c-card); border-radius: var(--radius-lg); }
+.surface--flat { background: var(--c-surface); border-radius: var(--radius-lg); }
+.surface--outline { background: var(--c-card); border-radius: var(--radius-lg); }
+
+/* 카드 안의 목록 구분 — 선을 긋되 아주 옅게, 좌측 여백을 띄워서 */
+.hairlines > * + * {
+  border-top: var(--hairline) solid var(--c-line);
+}
+
+.divider { height: var(--hairline); background: var(--c-line); }
+.divider--strong { background: var(--c-line-strong); }
+
+/* ── 배치 유틸 ──────────────────────────────────── */
+.stack { display: flex; flex-direction: column; }
+.stack--1 { gap: var(--space-1); }
+.stack--2 { gap: var(--space-2); }
+.stack--3 { gap: var(--space-3); }
+.stack--4 { gap: var(--space-4); }
+.stack--5 { gap: var(--space-5); }
+.stack--6 { gap: var(--space-6); }
+
+.row { display: flex; align-items: center; gap: var(--space-3); }
+.row--between { justify-content: space-between; }
+.row--baseline { align-items: baseline; }
+.row--wrap { flex-wrap: wrap; }
+.row--top { align-items: flex-start; }
+
+.spacer { flex: 1 1 auto; }
+
+/* 수치 그리드 — 한 행에 최대 4개 */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
+  gap: var(--space-5) var(--space-3);
+}
+
+/* 가로 스크롤 트랙 (필터 칩 등) — 페이지 여백을 뚫고 끝까지 */
+.scroller {
+  display: flex;
+  gap: var(--space-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--space-1) var(--page-pad);
+  margin: 0 calc(var(--page-pad) * -1);
+}
+
+.scroller::-webkit-scrollbar { display: none; }
+
+/* 페이지 좌우 여백을 뚫고 나가는 전폭 블록 */
+.bleed {
+  margin-left: calc(var(--page-pad) * -1);
+  margin-right: calc(var(--page-pad) * -1);
+}
+
+/* 하단 고정 액션 */
+/* 배경을 불투명하게 둔다. 반투명 그라디언트만 쓰면 흰 카드 위에서 잘린 것처럼 보인다.
+   버튼 위쪽에만 짧은 페이드를 얹어 스크롤되는 내용이 자연스럽게 사라지게 한다. */
+.sticky-action {
+  position: sticky;
+  bottom: 0;
+  background: var(--c-bg);
+  padding: var(--space-3) 0 calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+  margin-top: var(--space-6);
+}
+
+.sticky-action::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 24px;
+  background: linear-gradient(to top, var(--c-bg), transparent);
+  pointer-events: none;
+}
+
+/* 고정 버튼이 마지막 내용을 영구히 가리지 않도록 아래 여백을 확보한다 */
+.page:has(.sticky-action) { padding-bottom: var(--space-4); }

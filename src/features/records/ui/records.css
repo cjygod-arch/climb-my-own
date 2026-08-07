@@ -1,0 +1,66 @@
+/* records.css — 월별 기록·상세 전용. */
+
+/* 월 이동 — 선 없이 여백으로만 분리 */
+.monthnav {
+  padding: var(--space-1) 0 var(--space-2);
+}
+
+/* ── 추이 막대 ──────────────────────────────────── */
+/* 막대는 옅은 회색, 선택한 달만 액센트 — 색은 상태 표시에만 쓴다. */
+.trend {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+  height: 96px;
+}
+
+.trend__col {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  height: 100%;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  transition: background-color 120ms ease;
+}
+
+.trend__col:hover { background: var(--c-surface); }
+
+.trend__bar-wrap {
+  flex: 1 1 auto;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.trend__bar {
+  width: 70%;
+  max-width: 24px;
+  background: var(--c-surface-2);
+  border-radius: var(--radius-full);
+  min-height: 6px;
+  transition: background-color 140ms ease, height 300ms var(--ease-out);
+}
+
+.trend__col[aria-pressed='true'] .trend__bar { background: var(--c-accent); }
+.trend__col[aria-pressed='true'] .trend__label { color: var(--c-text); font-weight: var(--fw-bold); }
+
+.trend__label {
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+  color: var(--c-text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 기록 목록 행은 shared/styles/components.css 의 .entry 를 쓴다.
+   홈 화면과 공유하는 형태이므로 기능 전용 CSS에 두지 않는다. */
+.entries {
+  background: var(--c-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2);
+  box-shadow: var(--c-shadow);
+}

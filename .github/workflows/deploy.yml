@@ -1,0 +1,78 @@
+name: Deploy to GitHub Pages
+
+# 빌드 단계가 없다. 저장소를 그대로 올린다.
+# 대신 올리기 전에 데이터 정합성과 레이어 규칙을 검사한다 —
+# 깨진 데이터가 배포되는 것을 막는 유일한 관문이다.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 동시에 여러 배포가 겹치지 않게 한다. 진행 중인 것은 끝까지 두고 대기 중인 것만 취소.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: JS 구문 검사 (ES 모듈)
+        run: |
+          fail=0
+          for f in $(find src tools -name "*.js" -o -name "*.mjs"); do
+            if ! node --input-type=module --check < "$f" > /dev/null 2>&1; then
+              echo "::error file=$f::구문 오류"
+              fail=1
+            fi
+          done
+          exit $fail
+
+      - name: import 경로 검사
+        run: node tools/verify-imports.mjs
+
+      - name: 데이터 정합성 검사
+        run: node tools/verify-data.mjs
+
+      - name: 레이어 규칙 검사
+        run: node tools/verify-layers.mjs
+
+      - name: 시드 SQL 최신 여부 확인
+        run: |
+          node tools/build-seed-sql.mjs
+          if ! git diff --quiet -- supabase/migrations; then
+            echo "::error::시드 SQL이 JSON과 다릅니다. 'node tools/build-seed-sql.mjs' 실행 후 커밋하세요."
+            git diff --stat -- supabase/migrations
+            exit 1
+          fi
+
+  deploy:
+    needs: verify
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
+
+      # 저장소 루트를 그대로 올린다. .nojekyll 이 있어야 _로 시작하는 경로가 살아남는다.
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

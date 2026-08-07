@@ -1,0 +1,26 @@
+/* profile.css — 로그인·내 정보 화면 전용. */
+
+.login__head {
+  align-items: flex-start;
+  padding: var(--space-5) 0 var(--space-2);
+}
+
+.login__mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-lg);
+  background: var(--c-accent-weak);
+  color: var(--c-accent);
+}
+
+.login__error {
+  color: var(--c-danger);
+  background: var(--c-danger-weak);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+}

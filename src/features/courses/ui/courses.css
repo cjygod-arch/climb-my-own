@@ -1,0 +1,110 @@
+/* courses.css — 등산길 안내·코스 등록·지도 전용. */
+
+/* 고도 단면도 — 카드 안에 담는다 */
+.course-elev {
+  background: var(--c-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--c-shadow);
+}
+
+/* 구간 리스트 — 카드 안 */
+.segments {
+  background: var(--c-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2) var(--space-4);
+  box-shadow: var(--c-shadow);
+}
+
+/* ── 코스 지도 화면 ─────────────────────────────── */
+.mapview__canvas {
+  width: 100%;
+  height: 46dvh;
+  min-height: 280px;
+  background: var(--c-surface-2);
+}
+
+.mapview__fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--space-4);
+}
+
+/* 지도 아래 패널이 지도를 살짝 덮으며 올라온다 */
+.mapview__panel {
+  position: relative;
+  margin-top: -20px;
+  padding-top: var(--space-5);
+  background: var(--c-bg);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.mapview__list {
+  background: var(--c-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2);
+  margin-top: var(--space-3);
+  box-shadow: var(--c-shadow);
+}
+
+.maprow { border-radius: var(--radius); transition: background-color 120ms ease; }
+.maprow[data-active='true'] { background: var(--c-accent-weak); }
+
+.maprow__pick {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 64px;
+  padding: var(--space-3);
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: var(--radius);
+}
+
+/* 번호 — 지도의 마커와 같은 원형 */
+.maprow__num {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-full);
+  background: var(--c-surface-2);
+  color: var(--c-text-mute);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.maprow[data-active='true'] .maprow__num {
+  background: var(--c-accent);
+  color: #FFFFFF;
+}
+
+.maprow__body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+
+.maprow__name,
+.maprow__route { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.maprow__route { color: var(--c-text-faint); }
+
+.maprow__meta {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.maprow__dist {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.02em;
+}
+
+.maprow__actions { padding: 0 var(--space-3) var(--space-3); }
