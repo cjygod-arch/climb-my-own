@@ -272,7 +272,7 @@ erDiagram
 | `owner_id` | 등록 회원 | uuid | 16 byte | Y | FK | `NULL` | → `auth.users.id`. 공식 코스는 `NULL` |
 | `note` | 비고 | text | — | N | | `''` | 주의사항·특징 |
 | `track` | 실제 등산로 경로 | jsonb | — | Y | | `NULL` | `[[lat,lng], ...]`. [5.1](#51-coursestrack--실제-등산로-경로) 참조 |
-| `track_source` | 경로 출처 | text | — | N | | `''` | `OSM` 또는 `개략 경로` |
+| `track_source` | 경로 출처 | text | — | N | | `''` | 자유 문구. 현재는 `OpenStreetMap 보행로` 또는 빈 문자열. [9.9](#99-경로-출처-coursestrack_source) 참조 |
 | `created_at` | 생성일시 | timestamptz | 8 byte | N | | `now()` | 행 생성 시각 |
 
 **키 · 인덱스**
@@ -304,7 +304,7 @@ erDiagram
 |---|---|---|---|---|---|---|---|
 | `id` | 구간 식별자 | text | — | N | PK | — | 관례상 `{course_id}-{seq}` |
 | `course_id` | 코스 식별자 | text | — | N | FK | — | → `courses.id` |
-| `seq` | 구간 순번 | integer | 4 byte | N | UK | — | 들머리부터 1씩 증가 |
+| `seq` | 구간 순번 | integer | 4 byte | N | UK | — | **들머리가 `0`**, 이후 1씩 증가 |
 | `name` | 지점명 | text | — | N | | `''` | 예: `백운대`, `대남문` |
 | `cum_distance_km` | 누적 거리 | numeric | (6,2) | N | | `0` | **들머리 기준 누적값**. 구간 거리가 아니다 |
 | `elevation_m` | 지점 표고 | integer | 4 byte | N | | `0` | 해당 지점의 해발고도(m) |
@@ -318,6 +318,9 @@ erDiagram
 |---|---|---|---|
 | PK | `course_segments_pkey` | `id` | 기본키 인덱스 |
 | UK | `course_segments_seq_uk` | `course_id`, `seq` | 한 코스 안에서 순번 중복 방지 |
+
+> `id`는 관례상 `{course_id}-{seq}` 라서 들머리 행은 `...-0` 으로 끝난다.
+> 현재 61개 코스에 구간 291개가 들어 있고, 번호가 끊긴 코스는 없다.
 | IDX | `course_segments_course_idx` | `course_id`, `seq` | 순서대로 읽는 게 유일한 조회 패턴 |
 
 **제약**
@@ -479,7 +482,8 @@ erDiagram
 |---|---|
 | 점 개수 | 코스당 100 ~ 1,200점 |
 | 없을 때 | 지도가 `course_segments`의 좌표를 이어 **개략 경로**를 그린다 |
-| 출처 표기 | `track_source` = `OSM` 또는 `개략 경로` |
+| 출처 표기 | `track_source` (현재 `OpenStreetMap 보행로` 39건 / 빈 문자열 22건) |
+| 현황 | 61개 코스 중 39개가 실제 경로 보유 |
 
 **테이블로 쪼개지 않은 이유** — 이 좌표열은 개별 점을 조회하거나 갱신하는 일이 없다.
 지도를 그릴 때 통째로 읽고, 갱신할 때 통째로 덮어쓴다. 61개 코스를 행으로 펴면
@@ -760,11 +764,22 @@ Supabase 없이 앱을 돌리기 위한 대체 소스다. 스키마와 같은 �
 
 ### 9.9 경로 출처 (`courses.track_source`)
 
-| 값 | 의미 |
-|---|---|
-| `OSM` | OpenStreetMap 등산로를 따라간 실제 경로 |
-| `개략 경로` | 구간 지점을 직선으로 이은 근사값. UI에 그대로 표기한다 |
-| `''` | 경로 없음 |
+**자유 문자열이다.** 고정 코드가 아니라 경로를 만든 방법을 사람이 읽을 문구로 적는다.
+현재 시드에 들어 있는 값:
+
+| 값 | 코스 수 | 의미 |
+|---|---|---|
+| `OpenStreetMap 보행로` | 39 | OSM 등산로를 따라 라우팅한 실제 경로 |
+| `''` (빈 문자열) | 22 | 경로 없음 |
+
+**`개략 경로`는 저장된 값이 아니다.** `track`이 비어 있을 때
+`src/domain/rules/coursePath.js`의 `pathProvenance()`가 화면에 붙이는 라벨이다.
+
+| `track` | `track_source` | 화면 표기 |
+|---|---|---|
+| 있음 | 값 있음 | 그 값 그대로 (`OpenStreetMap 보행로`) |
+| 있음 | 빈 문자열 | `실제 등산로` |
+| 없음 | (무관) | `개략 경로` — 구간 지점을 직선으로 이어 그린다 |
 
 ---
 
@@ -898,7 +913,7 @@ Supabase 없이 앱을 돌리기 위한 대체 소스다. 스키마와 같은 �
 | **배지 판정이 클라이언트에 있다** | 조작하면 받지 않은 배지를 넣을 수 있다 | 판정 규칙을 Postgres 함수로 옮기고 `user_badges` INSERT 정책에서 검사 |
 | **네이버 로그인 미지원** | Supabase provider 목록에 없다 | Edge Function으로 OAuth 콜백 처리 후 커스텀 토큰 발급 |
 | **`updated_at` 없음** | 언제 고쳤는지 알 수 없다 | 수정 이력이 필요해지면 컬럼 + 트리거 추가 |
-| **명산 데이터 20/100** | 61개 코스 등록, 그중 39개만 실제 OSM 경로 | 나머지는 `track_source='개략 경로'`로 표기 중 |
+| **명산 데이터 20/100** | 61개 코스 등록, 그중 39개만 실제 OSM 경로 | 나머지 22개는 `track`이 비어 화면에 `개략 경로`로 표기된다 |
 | **세션이 기기 로컬** | 폰을 바꾸면 진행 중 산행이 이어지지 않는다 | 의도된 선택 ([6.1](#61-진행-중인-세션--localstorage)). 필요해지면 세션 테이블 추가 |
 | **`track`/`route` 공간 질의 불가** | "이 지점 반경 5km 코스" 같은 질의를 못 한다 | PostGIS + `geography(LineString)` 도입 |
 
